@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id = "canvas" width = "1200" height = "650"></canvas>
+
+<script>
+     let canvas = document.getElementById("canvas");
+     let context = canvas.getContext("2d");
+
+     	const NUM_POINTS = 30;
+     	const points = [];
+     	for (let i=0; i < NUM_POINTS; i++) {
+     		points.push({
+     			x: Math.random() * canvas.width,
+     			y: Math.random() * canvas.height,
+     			width: Math.random() * 100,
+     			height: Math.random() *  100,
+     			xDelta: 1,
+     			yDelta: 1,
+     			color: 'green'
+     		});
+     	};
+        const draw = function() {
+              context.clearRect(0, 0, canvas.width, canvas.height);
+              points.forEach(function(point) {
+                    context.fillStyle = point.color;
+                    context.fillRect(point.x, point.y, point.width, point.height);
+                    point.x = point.x + point.xDelta;
+                    point.y = point.y + point.yDelta;
+              if ((point.x + point.width) >= canvas.width || point.x <= 0) {
+              	point.xDelta *= (-1);
+              };
+              if ((point.y + point.height) >= canvas.height || point.y <= 0) {
+              	point.yDelta *= (-1);
+              };
+            });
+
+        };
+          let animate = function() {
+              draw();
+              setTimeout (animate, 1);
+          };
+          animate();
+</script>
+
+</body>
+</html>
